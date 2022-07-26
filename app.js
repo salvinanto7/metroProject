@@ -3,6 +3,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var pool=require('./db')
 
 var adminRouter = require('./routes/admin');
 var usersRouter = require('./routes/users');
@@ -27,6 +28,8 @@ app.use('/admin', adminRouter);
 app.use(function(req, res, next) {
   next(createError(404));
 });
+
+//mysql
 
 // error handler
 app.use(function(err, req, res, next) {
