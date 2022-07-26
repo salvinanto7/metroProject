@@ -11,6 +11,7 @@ const verifyLogin=(req,res,next)=>{
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
+
   res.render('user/index',{admin:false});
 });
 
