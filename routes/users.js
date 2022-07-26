@@ -13,6 +13,9 @@ router.get('/train',(req,res)=>{
 router.get('/ticket',(req,res)=>{
   res.render('user/ticket',{admin:false})
 });
+router.get('/about',(req,res)=>{
+  res.render('user/about',{admin:false})
+});
 
 
 
