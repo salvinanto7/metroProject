@@ -24,6 +24,9 @@ router.get('/ticket',(req,res)=>{
 router.get('/about',(req,res)=>{
   res.render('user/about',{admin:false})
 });
+router.get('/contact',(req,res)=>{
+  res.render('user/contact',{admin:false})
+});
 
 router.get('/login',(req,res)=>{
   res.render('user/login',{admin:false})
