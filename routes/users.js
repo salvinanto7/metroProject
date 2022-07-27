@@ -264,5 +264,63 @@ router.get('/delete-train/:id',(req,res)=>{
   })
 })
 
+router.get('/edit-train/:id',(req,res)=>{
+  let trainId = req.params.id
+  //console.log(stationId)
+  db.getConnection(async(err,connection)=>{
+    if (err) throw(err)
+    const sqlSearch = 'SELECT * FROM train WHERE train.train_no = ?'
+    const search_query = mysql.format(sqlSearch,[trainId])
+    await connection.query(search_query,(err,result)=>{
+      if(err){
+        console.log(err)
+      }else{
+        //console.log('train deleted '+ scheduleId)
+        let trainData = Object.values(JSON.parse(JSON.stringify(result)))
+        console.log(trainData[0])
+        res.render('admin/edit-train',{train:trainData[0]})
+      }
+    })
+  })
+})
+router.get('/edit-schedule/:id',(req,res)=>{
+  let scheduleId = req.params.id
+  //console.log(stationId)
+  db.getConnection(async(err,connection)=>{
+    if (err) throw(err)
+    const sqlSearch = 'SELECT * FROM schedule WHERE schedule.schedule_id = ?'
+    const search_query = mysql.format(sqlSearch,[scheduleId])
+    await connection.query(search_query,(err,result)=>{
+      if(err){
+        console.log(err)
+      }else{
+        //console.log('train deleted '+ scheduleId)
+        let scheduleData = Object.values(JSON.parse(JSON.stringify(result)))
+        //console.log(scheduleData[0])
+        res.render('admin/edit-schedule',{schedule:scheduleData[0]})
+      }
+    })
+  })
+})
+router.get('/edit-station/:id',(req,res)=>{
+  let stationId = req.params.id
+  //console.log(stationId)
+  db.getConnection(async(err,connection)=>{
+    if (err) throw(err)
+    const sqlSearch = 'SELECT * FROM station WHERE station.station_code = ?'
+    const search_query = mysql.format(sqlSearch,[stationId])
+    await connection.query(search_query,(err,result)=>{
+      if(err){
+        console.log(err)
+      }else{
+        //console.log('train deleted '+ scheduleId)
+        let stationData = Object.values(JSON.parse(JSON.stringify(result)))
+        console.log(stationData[0])
+        res.render('admin/edit-station',{station:stationData[0]})
+      }
+    })
+  })
+})
+
 
 module.exports = router;

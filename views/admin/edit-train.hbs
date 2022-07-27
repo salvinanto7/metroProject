@@ -1,0 +1,39 @@
+<section>
+    <div class="container pt-5">
+        <div class="row">
+            <h3>Edit Train</h3>
+            <div class='col-md-6'>
+        <form action="/edit-train/{{train.train_no}}" method="POST">
+          <div class='form-group mt-4 pt-5'>
+            <label for=''>
+              Train Number
+            </label>
+            <input
+              type='text'
+              class='form-control'
+              name="train_no"
+              placeholder='Train Number'
+              value="{{train.train_no}}"
+            />
+          </div>
+          <div class='form-group mt-4'>
+            <label for=''>
+              Train Name
+            </label>
+            <input
+              type='text'
+              class='form-control'
+              name="train_name"
+              placeholder='Train name'
+              value="{{train.train_name}}"
+            />
+          </div>
+          
+          <button type='submit' class='btn btn-primary mt-4' onclick="return confirm('Are you sure you want to update {{train.train_name}}?')">
+            Update
+          </button>
+        </form>
+      </div>
+        </div>
+    </div>
+</section>
