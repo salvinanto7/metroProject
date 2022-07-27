@@ -17,8 +17,47 @@ const verifyLogin=(req,res,next)=>{
 router.get('/', function(req, res, next) {
   let user = req.session.user
   let admin = req.session.admin
+  let schedule_res
+  let train_res
+  let station_res
   if (admin){
-    res.render('admin/index',{admin,user})
+    db.getConnection(async(err,connection)=>{
+      const schedule = 'SELECT * FROM schedule';
+      await connection.query(schedule,(err,result)=>{
+        if(err){
+          return console.error(err.message)
+        }else{
+          schedule_res = result[0]
+          //console.log(result)
+          console.log(schedule_res)
+        }
+      })
+      const train = 'SELECT * FROM train';
+      await connection.query(train,(err,result)=>{
+        if(err){
+          return console.error(err.message)
+        }else{
+          train_res = result[0]
+          //console.log(result)
+          console.log(train_res)
+        }
+      })
+      const station = 'SELECT * FROM station';
+      await connection.query(station,(err,result)=>{
+        if(err){
+          return console.error(err.message)
+        }else{
+          station_res = result[0]
+          //console.log(result)
+          console.log(station_res)
+        }
+        res.render('admin/index',{admin,user,schedule_res,train_res,station_res})
+      })
+    })
+    //console.log(schedule_res)
+    //console.log(train_res)
+    //console.log(station_res)
+    
   }else{
     res.render('user/index',{admin,user});
   }

@@ -1,7 +1,7 @@
 <section>
       <nav class='navbar navbar-expand-lg navbar-dark bg-dark' style="min-height:5rem;">
         <a class='navbar-brand' href='/admin'>
-          Admin Page
+          Welcome {{user}} !
         </a>
         <button
           class='navbar-toggler'
@@ -15,6 +15,7 @@
           <span class='navbar-toggler-icon'></span>
         </button>
 
+<!--
         <div class='collapse navbar-collapse' id='navbarSupportedContent'>
           <ul class='navbar-nav mr-auto'>
             <li class='nav-item active'>
@@ -25,7 +26,7 @@
                 </span>
               </a>
             </li>
-            <!--
+            
             <li class='nav-item'>
               <a class='nav-link' href='#'>
                 Link
@@ -41,9 +42,10 @@
                 Link
               </a>
             </li>
-            -->
+            
           </ul>
-          <div class="dropdown show">
+          -->
+          <div class="dropdown show ml-auto">
   <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
     {{#if user}}
         {{user}}
