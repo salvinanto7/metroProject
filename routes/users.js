@@ -16,7 +16,12 @@ const verifyLogin=(req,res,next)=>{
 /* GET users listing. */
 router.get('/', function(req, res, next) {
   let user = req.session.user
-  res.render('user/index',{admin:false,user});
+  let admin = req.session.admin
+  if (admin){
+    res.render('admin/index',{admin,user})
+  }else{
+    res.render('user/index',{admin,user});
+  }
 });
 
 router.get('/train',(req,res)=>{
@@ -34,7 +39,7 @@ router.get('/contact',(req,res)=>{
 });
 
 router.get('/login',(req,res)=>{
-  res.render('user/login',{admin:false})
+  //res.render('user/login',{admin:false})
   if(req.session.loggedIn){
     res.redirect('/');
   }
@@ -137,6 +142,11 @@ router.post('/login',(req,res)=>{
           console.log(email+ ' logged in successfully');
           req.session.loggedIn = true;
           req.session.user = name;
+          if (result[0].isAdmin){
+            req.session.admin = true;
+          }else{
+            req.session.admin = false;
+          }
           res.redirect('/')
           //res.redirect('/')
         }else{
