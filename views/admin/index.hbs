@@ -55,45 +55,63 @@
                   Schedule Id
                 </th>
                 <th scope='col'>
-                    Train Id
+                  Train Id
                 </th>
                 <th scope='col'>
-                    Start(source)
+                  Start(source)
                 </th>
                 <th scope='col'>
-                    Destination
+                  Destination
                 </th>
                 <th scope='col'>
-                    Departure Time
+                  Departure Time
                 </th>
                 <th scope='col'>
-                    Arrival Time
+                  Arrival Time
                 </th>
               </tr>
             </thead>
             <tbody>
-                
-                {{#each schedule_res}}
-              <tr>
-                <th scope='row'>
+              {{#each schedule_res}}
+                <tr>
+                  <th scope='row'>
                     {{this.schedule_id}}
-                </th>
-                <td>
+                  </th>
+                  <td>
                     {{this.train_id}}
-                </td>
-                <td>
-                  {{this.source}}
-                </td>
-                <td>
-                  {{this.destination}}
-                </td>
-                <td>
-                  {{this.departure_time}}
-                </td>
-                <td>
-                  {{this.arrival_time}}
-                </td>
-              </tr>
+                  </td>
+                  <td>
+                    {{this.source}}
+                  </td>
+                  <td>
+                    {{this.destination}}
+                  </td>
+                  <td>
+                    {{this.departure_time}}
+                  </td>
+                  <td>
+                    {{this.arrival_time}}
+                  </td>
+                  <td>
+                    <a
+                      class='btn btn-primary'
+                      href="/edit-schedule/{{this.schedule_id}}"
+                    >
+                      Edit
+                    </a>
+                  </td>
+                  <td>
+                    <a
+                      class='btn btn-danger'
+                      href="/delete-schedule/{{this.schedule_id}}"
+                      onclick="return confirm('Are you sure to delete {{
+                        this.name
+                      }}?')"
+                    >
+                      Delete
+                    </a>
+                  </td>
+                </tr>
               {{/each}}
             </tbody>
           </table>
@@ -111,20 +129,39 @@
                   Train No
                 </th>
                 <th scope='col'>
-                    Train Name
+                  Train Name
                 </th>
               </tr>
             </thead>
             <tbody>
-                {{#each train_res}}
-              <tr>
-                <th scope='row'>
-                    {{train_no}}
-                </th>
-                <td>
+              {{#each train_res}}
+                <tr>
+                  <th scope='row'>
+                    {{this.train_no}}
+                  </th>
+                  <td>
                     {{this.train_name}}
-                </td>
-              </tr>
+                  </td>
+                  <td>
+                    <a
+                      class='btn btn-primary'
+                      href="/edit-train/{{this.train_no}}"
+                    >
+                      Edit
+                    </a>
+                  </td>
+                  <td>
+                    <a
+                      class='btn btn-danger'
+                      href="/delete-train/{{this.train_no}}"
+                      onclick="return confirm('Are you sure to delete {{
+                        this.name
+                      }}?')"
+                    >
+                      Delete
+                    </a>
+                  </td>
+                </tr>
               {{/each}}
             </tbody>
           </table>
@@ -142,22 +179,47 @@
                   Station Code
                 </th>
                 <th scope='col'>
-                    Station Name
+                  Station Name
                 </th>
               </tr>
             </thead>
             <tbody>
+<<<<<<< HEAD
                
                 {{#each station_res}}
               <tr>
                 <th scope='row'>
                     {{log station_code}}
+=======
+              {{#each station_res}}
+                <tr>
+                  <th scope='row'>
+>>>>>>> af1e7388dd25697ffa7cb8409919d4f74d0ead8e
                     {{this.station_code}}
-                </th>
-                <td>
+                  </th>
+                  <td>
                     {{this.station_name}}
-                </td>
-              </tr>
+                  </td>
+                  <td>
+                    <a
+                      class='btn btn-primary'
+                      href="/edit-station/{{this.station_code}}"
+                    >
+                      Edit
+                    </a>
+                  </td>
+                  <td>
+                    <a
+                      class='btn btn-danger'
+                      href="/delete-station/{{this.station_code}}"
+                      onclick="return confirm('Are you sure to delete {{
+                        this.name
+                      }}?')"
+                    >
+                      Delete
+                    </a>
+                  </td>
+                </tr>
               {{/each}}
             </tbody>
           </table>

@@ -28,8 +28,12 @@ router.get('/', async function(req, res, next) {
         if(err){
           return console.error(err.message)
         }else{
+<<<<<<< HEAD
           console.log(result)
           schedule_res = Object.values(JSON.parse(JSON.stringify(result))); 
+=======
+          schedule_res =Object.values(JSON.parse(JSON.stringify(result)))
+>>>>>>> af1e7388dd25697ffa7cb8409919d4f74d0ead8e
           //console.log(result)
           //console.log(schedule_res)
         }
@@ -39,9 +43,9 @@ router.get('/', async function(req, res, next) {
         if(err){
           return console.error(err.message)
         }else{
-         train_res =Object.values(JSON.parse(JSON.stringify(result))); 
-          
-          //console.log(train_res)
+          train_res =Object.values(JSON.parse(JSON.stringify(result)))
+          //console.log(result)
+          console.log(train_res)
         }
       })
       const station = 'SELECT * FROM station';
@@ -49,14 +53,13 @@ router.get('/', async function(req, res, next) {
         if(err){
           return console.error(err.message)
         }else{
-          console.log(result)
-          station_res = Object.values(JSON.parse(JSON.stringify(result))); 
-          
+          station_res = Object.values(JSON.parse(JSON.stringify(result)))
+          //console.log(result)
+          console.log(station_res)
         }
-        // console.log("station "+result)
-        
-       res.render('admin/index',{admin,user,schedule_res,train_res,station_res})
-         console.log(station_res)
+        res.render('admin/index',{admin,user,schedule_res:schedule_res,train_res:train_res,station_res:station_res})
+        //console.log(station_res)
+        //console.log(train_res)
       })
     })
    
@@ -216,5 +219,66 @@ router.get("/logout", (req, res) => {
   req.session.destroy();
   res.redirect("/login");
 });
+
+
+
+
+// admin routers 
+
+
+router.get('/delete-schedule/:id',(req,res)=>{
+  let scheduleId = req.params.id
+  //console.log(scheduleId)
+  db.getConnection(async(err,connection)=>{
+    if (err) throw(err)
+    const sqlSearch = 'DELETE FROM schedule WHERE schedule.schedule_id = ?'
+    const search_query = mysql.format(sqlSearch,[scheduleId])
+    await connection.query(search_query,(err,result)=>{
+      if(err){
+        console.log(err)
+      }else{
+        console.log('schedule deleted '+ scheduleId)
+        res.redirect('/')
+      }
+    })
+  })
+})
+
+router.get('/delete-station/:id',(req,res)=>{
+  let stationId = req.params.id
+  //console.log(stationId)
+  db.getConnection(async(err,connection)=>{
+    if (err) throw(err)
+    const sqlSearch = 'DELETE FROM station WHERE station.station_code = ?'
+    const search_query = mysql.format(sqlSearch,[stationId])
+    await connection.query(search_query,(err,result)=>{
+      if(err){
+        console.log(err)
+      }else{
+        //console.log('station deleted '+ scheduleId)
+        res.redirect('/')
+      }
+    })
+  })
+})
+
+router.get('/delete-train/:id',(req,res)=>{
+  let trainId = req.params.id
+  //console.log(stationId)
+  db.getConnection(async(err,connection)=>{
+    if (err) throw(err)
+    const sqlSearch = 'DELETE FROM train WHERE train.train_no = ?'
+    const search_query = mysql.format(sqlSearch,[trainId])
+    await connection.query(search_query,(err,result)=>{
+      if(err){
+        console.log(err)
+      }else{
+        //console.log('train deleted '+ scheduleId)
+        res.redirect('/')
+      }
+    })
+  })
+})
+
 
 module.exports = router;
