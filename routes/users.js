@@ -447,4 +447,72 @@ router.post('/edit-schedule/:id',(req,res)=>{
   })
 })
 
+router.get('/add-train',(req,res)=>{
+  res.render('admin/add-train');
+})
+router.get('/add-schedule',(req,res)=>{
+  res.render('admin/add-schedule');
+})
+router.get('/add-station',(req,res)=>{
+  res.render('admin/add-station');
+})
+
+router.post('/add-train',(req,res)=>{
+  let trainId = req.body.train_no
+  let trainName = req.body.train_name
+  console.log(trainId)
+  db.getConnection(async(err,connection)=>{
+    if (err) throw(err)
+    const sqlSearch = 'INSERT INTO train (train_no,train_name) VALUES (?,?)'
+    const search_query = mysql.format(sqlSearch,[trainId,trainName])
+    await connection.query(search_query,(err,result)=>{
+      if(err){
+        console.log(err)
+      }else{
+        //console.log('train deleted '+ scheduleId)
+        res.redirect('/')
+      }
+    })
+  })
+})
+router.post('/add-station',(req,res)=>{
+  let stationId = req.body.station_code
+  let stationName = req.body.station_name
+  //console.log(trainId)
+  db.getConnection(async(err,connection)=>{
+    if (err) throw(err)
+    const sqlSearch = 'INSERT INTO station (station_code,station_name) VALUES (?,?)'
+    const search_query = mysql.format(sqlSearch,[stationId,stationName])
+    await connection.query(search_query,(err,result)=>{
+      if(err){
+        console.log(err)
+      }else{
+        //console.log('train deleted '+ scheduleId)
+        res.redirect('/')
+      }
+    })
+  })
+})
+router.post('/add-schedule',(req,res)=>{
+  let scheduleId = req.body.schedule_id
+  let trainId = req.body.train_id
+  let source = req.body.source
+  let destination = req.body.destination
+  let departure = req.body.departure_time
+  let arrival = req.body.arrival_time
+  //console.log(trainId)
+  db.getConnection(async(err,connection)=>{
+    if (err) throw(err)
+    const sqlSearch = 'INSERT INTO schedule (schedule_id,train_id,source,destination,departure_time,arrival_time) VALUES (?,?,?,?,?,?)'
+    const search_query = mysql.format(sqlSearch,[scheduleId,trainId,source,destination,departure,arrival])
+    await connection.query(search_query,(err,result)=>{
+      if(err){
+        console.log(err)
+      }else{
+        //console.log('train deleted '+ scheduleId)
+        res.redirect('/')
+      }
+    })
+  })
+})
 module.exports = router;
