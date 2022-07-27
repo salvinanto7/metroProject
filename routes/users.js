@@ -35,13 +35,13 @@ router.get('/contact',(req,res)=>{
 
 router.get('/login',(req,res)=>{
   res.render('user/login',{admin:false})
-  if(req.session.loggedIn){
-    res.redirect('/');
-  }
-  else{
-    res.render('user/login',{loginErr:req.session.loginErr});
-    req.session.loginErr = false;
-  }
+  //if(req.session.loggedIn){
+  //  res.redirect('/');
+  //}
+  //else{
+  //  res.render('user/login',{loginErr:req.session.loginErr});
+  //  req.session.loginErr = false;
+  //}
 });
 
 router.get('/signup',(req,res)=>{
@@ -64,13 +64,14 @@ router.post("/signup", async (req,res) => {
   const phone = req.body.phone;
   const email = req.body.email;
   const username = req.body.username;
-  const hashedPassword = await bcrypt.hash(req.body.password,10);
+  const password = req.body.password;
+  //const hashedPassword = await bcrypt.hash(req.body.password,10);
   db.getConnection( async (err, connection) => { 
     if (err) throw (err) 
-    const sqlSearch = "SELECT * FROM user WHERE first_name = ?"
-    const search_query = mysql.format(sqlSearch,[firstName]) 
+    const sqlSearch = "SELECT * FROM user WHERE email = ?"
+    const search_query = mysql.format(sqlSearch,[email]) 
     const sqlInsert = "INSERT INTO user VALUES (?,?,?,?,?,?,?,0)"
-    const insert_query = mysql.format(sqlInsert,[hashedPassword,firstName,lastName,age,phone,email,username])
+    const insert_query = mysql.format(sqlInsert,[password,firstName,lastName,age,phone,email,username])
    // ? will be replaced by values
    // ?? will be replaced by string 
     await connection.query (search_query, async (err, result) => {  if (err) throw (err)
@@ -87,24 +88,60 @@ router.post("/signup", async (req,res) => {
       if (err) throw (err)
       console.log ("--------> Created new User")
       console.log(result.insertId)
-      req.session.loggedIn = true;
-      req.session.user = firstName;
+      //req.session.loggedIn = true;
+      //req.session.user = firstName;
       res.redirect('/login')
     })
    }}) //end of connection.query()
   }) //end of db.getConnection()
 }) //end of app.post()
 
+
+//router.post('/login',(req,res)=>{
+//  userHelpers.doLogin(req.body).then((response)=>{
+//    if (response.status){
+//      req.session.loggedIn =true;
+//      req.session.user = response.user;
+//      res.redirect('/');
+//    }else{
+//      req.session.loginErr = "Invalid username or password";
+//      res.redirect('/login');
+//    }
+//  })
+//})
+
 router.post('/login',(req,res)=>{
-  userHelpers.doLogin(req.body).then((response)=>{
-    if (response.status){
-      req.session.loggedIn =true;
-      req.session.user = response.user;
-      res.redirect('/');
-    }else{
-      req.session.loginErr = "Invalid username or password";
-      res.redirect('/login');
-    }
+  const email = req.body.email;
+  const password = req.body.password;
+  db.getConnection(async(err,connection)=>{
+    if (err) throw(err)
+    const sqlsearch = "SELECT * FROM user WHERE email = ?";
+    const search_query  = mysql.format(sqlsearch,[email]);
+
+    await connection.query(search_query,async(err,result)=>{
+      connection.release()
+      if (err) throw(err)
+      if (result.length==0){
+        console.log("user does not exist");
+        res.redirect('/login');
+      }else{
+        const dbPassword = result[0].password;
+        console.log(result)
+        //console.log(password)
+        //var test
+        //test = await bcrypt.hash(password,10)
+        //console.log(test)
+        if(password===dbPassword){
+          console.log(email+ ' logged in successfully');
+          //res.session.user = email;
+          //res.redirect('/',{user:res.session.user})
+          res.redirect('/')
+        }else{
+          console.log("password incorrect");
+          res.send("password incorrect");
+        }
+      }
+    })
   })
 })
 
