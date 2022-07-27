@@ -420,201 +420,222 @@ router.get("/edit-station/:id", (req, res) => {
         console.log(stationData[0]);
         res.render("admin/edit-station", { station: stationData[0] });
       }
-    })
-  })
-})
+    });
+  });
+});
 
-router.post('/edit-station/:id',(req,res)=>{
-  let stationId = req.params.id
-  db.getConnection(async(err,connection)=>{
-    if (err) throw(err)
-    const stationCode= req.body.station_code
-    const stationName= req.body.station_name
-    const sqlSearch = 'UPDATE station SET station_code = ? WHERE station.station_code = ?'
-    const search_query = mysql.format(sqlSearch,[stationCode,stationId])
-    await connection.query(search_query,(err,result)=>{
-      if(err){
-        console.log(err)
-      }else{
-        console.log('station code updated')
+router.post("/edit-station/:id", (req, res) => {
+  let stationId = req.params.id;
+  db.getConnection(async (err, connection) => {
+    if (err) throw err;
+    const stationCode = req.body.station_code;
+    const stationName = req.body.station_name;
+    const sqlSearch =
+      "UPDATE station SET station_code = ? WHERE station.station_code = ?";
+    const search_query = mysql.format(sqlSearch, [stationCode, stationId]);
+    await connection.query(search_query, (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log("station code updated");
       }
-    })
-    const newsqlSearch = 'UPDATE station SET station_name = ? WHERE station.station_code = ?'
-    const newsearch_query = mysql.format(newsqlSearch,[stationName,stationCode])
-    await connection.query(newsearch_query,(err,result)=>{
-      if(err){
-        console.log(err)
-      }else{
-        console.log('station name updated')
-        res.redirect('/')
+    });
+    const newsqlSearch =
+      "UPDATE station SET station_name = ? WHERE station.station_code = ?";
+    const newsearch_query = mysql.format(newsqlSearch, [
+      stationName,
+      stationCode,
+    ]);
+    await connection.query(newsearch_query, (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log("station name updated");
+        res.redirect("/");
       }
-    })
-  })
-})
+    });
+  });
+});
 
-router.post('/edit-train/:id',(req,res)=>{
-  let trainId = req.params.id
-  db.getConnection(async(err,connection)=>{
-    if (err) throw(err)
-    const trainCode= req.body.train_no
-    const trainName= req.body.train_name
-    const sqlSearch = 'UPDATE train SET train_no = ? WHERE train.train_no = ?'
-    const search_query = mysql.format(sqlSearch,[trainCode,trainId])
-    await connection.query(search_query,(err,result)=>{
-      if(err){
-        console.log(err)
-      }else{
-        console.log('train code updated')
+router.post("/edit-train/:id", (req, res) => {
+  let trainId = req.params.id;
+  db.getConnection(async (err, connection) => {
+    if (err) throw err;
+    const trainCode = req.body.train_no;
+    const trainName = req.body.train_name;
+    const sqlSearch = "UPDATE train SET train_no = ? WHERE train.train_no = ?";
+    const search_query = mysql.format(sqlSearch, [trainCode, trainId]);
+    await connection.query(search_query, (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log("train code updated");
       }
-    })
-    const newsqlSearch = 'UPDATE train SET train_name = ? WHERE train.train_no = ?'
-    const newsearch_query = mysql.format(newsqlSearch,[trainName,trainCode])
-    await connection.query(newsearch_query,(err,result)=>{
-      if(err){
-        console.log(err)
-      }else{
-        console.log('train name updated')
-        res.redirect('/')
+    });
+    const newsqlSearch =
+      "UPDATE train SET train_name = ? WHERE train.train_no = ?";
+    const newsearch_query = mysql.format(newsqlSearch, [trainName, trainCode]);
+    await connection.query(newsearch_query, (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log("train name updated");
+        res.redirect("/");
       }
-    })
-  })
-})
+    });
+  });
+});
 
-router.post('/edit-schedule/:id',(req,res)=>{
-  let scheduleId = req.params.id
-  db.getConnection(async(err,connection)=>{
-    if (err) throw(err)
-    const scheduleCode= req.body.schedule_id
-    const trainId= req.body.train_id
-    const source= req.body.source
-    const destination= req.body.destination
-    const departure= req.body.departure_time
-    const arrival= req.body.arrival_time
-    const sqlSearch = 'UPDATE schedule SET schedule_id = ? WHERE schedule.schedule_id = ?'
-    const search_query = mysql.format(sqlSearch,[scheduleCode,scheduleId])
-    await connection.query(search_query,(err,result)=>{
-      if(err){
-        console.log(err)
-      }else{
-       // console.log('train code updated')
+router.post("/edit-schedule/:id", (req, res) => {
+  let scheduleId = req.params.id;
+  db.getConnection(async (err, connection) => {
+    if (err) throw err;
+    const scheduleCode = req.body.schedule_id;
+    const trainId = req.body.train_id;
+    const source = req.body.source;
+    const destination = req.body.destination;
+    const departure = req.body.departure_time;
+    const arrival = req.body.arrival_time;
+    const sqlSearch =
+      "UPDATE schedule SET schedule_id = ? WHERE schedule.schedule_id = ?";
+    const search_query = mysql.format(sqlSearch, [scheduleCode, scheduleId]);
+    await connection.query(search_query, (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        // console.log('train code updated')
       }
-    })
-    const sqlSearch2 = 'UPDATE schedule SET train_id = ? WHERE schedule.schedule_id = ?'
-    const search_query2 = mysql.format(sqlSearch2,[trainId,scheduleCode])
-    await connection.query(search_query2,(err,result)=>{
-      if(err){
-        console.log(err)
-      }else{
+    });
+    const sqlSearch2 =
+      "UPDATE schedule SET train_id = ? WHERE schedule.schedule_id = ?";
+    const search_query2 = mysql.format(sqlSearch2, [trainId, scheduleCode]);
+    await connection.query(search_query2, (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
         //console.log('train code updated')
       }
-    })
-    const sqlSearch3 = 'UPDATE schedule SET source = ? WHERE schedule.schedule_id = ?'
-    const search_query3 = mysql.format(sqlSearch3,[source,scheduleCode])
-    await connection.query(search_query3,(err,result)=>{
-      if(err){
-        console.log(err)
-      }else{
+    });
+    const sqlSearch3 =
+      "UPDATE schedule SET source = ? WHERE schedule.schedule_id = ?";
+    const search_query3 = mysql.format(sqlSearch3, [source, scheduleCode]);
+    await connection.query(search_query3, (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
         //console.log('train code updated')
       }
-    })
-    const sqlSearch4 = 'UPDATE schedule SET destination = ? WHERE schedule.schedule_id = ?'
-    const search_query4 = mysql.format(sqlSearch4,[destination,scheduleCode])
-    await connection.query(search_query4,(err,result)=>{
-      if(err){
-        console.log(err)
-      }else{
+    });
+    const sqlSearch4 =
+      "UPDATE schedule SET destination = ? WHERE schedule.schedule_id = ?";
+    const search_query4 = mysql.format(sqlSearch4, [destination, scheduleCode]);
+    await connection.query(search_query4, (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
         //console.log('train code updated')
       }
-    })
-    const sqlSearch5 = 'UPDATE schedule SET departure_time = ? WHERE schedule.schedule_id = ?'
-    const search_query5 = mysql.format(sqlSearch5,[departure,scheduleCode])
-    await connection.query(search_query5,(err,result)=>{
-      if(err){
-        console.log(err)
-      }else{
+    });
+    const sqlSearch5 =
+      "UPDATE schedule SET departure_time = ? WHERE schedule.schedule_id = ?";
+    const search_query5 = mysql.format(sqlSearch5, [departure, scheduleCode]);
+    await connection.query(search_query5, (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
         //console.log('train code updated')
       }
-    })
-    const sqlSearch6 = 'UPDATE schedule SET arrival_time = ? WHERE schedule.schedule_id = ?'
-    const search_query6 = mysql.format(sqlSearch6,[arrival,scheduleCode])
-    await connection.query(search_query6,(err,result)=>{
-      if(err){
-        console.log(err)
-      }else{
+    });
+    const sqlSearch6 =
+      "UPDATE schedule SET arrival_time = ? WHERE schedule.schedule_id = ?";
+    const search_query6 = mysql.format(sqlSearch6, [arrival, scheduleCode]);
+    await connection.query(search_query6, (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
         //console.log('train code updated')
-        res.redirect('/')
+        res.redirect("/");
       }
-    })
-    
-  })
-})
+    });
+  });
+});
 
-router.get('/add-train',(req,res)=>{
-  res.render('admin/add-train');
-})
-router.get('/add-schedule',(req,res)=>{
-  res.render('admin/add-schedule');
-})
-router.get('/add-station',(req,res)=>{
-  res.render('admin/add-station');
-})
+router.get("/add-train", (req, res) => {
+  res.render("admin/add-train");
+});
+router.get("/add-schedule", (req, res) => {
+  res.render("admin/add-schedule");
+});
+router.get("/add-station", (req, res) => {
+  res.render("admin/add-station");
+});
 
-router.post('/add-train',(req,res)=>{
-  let trainId = req.body.train_no
-  let trainName = req.body.train_name
-  console.log(trainId)
-  db.getConnection(async(err,connection)=>{
-    if (err) throw(err)
-    const sqlSearch = 'INSERT INTO train (train_no,train_name) VALUES (?,?)'
-    const search_query = mysql.format(sqlSearch,[trainId,trainName])
-    await connection.query(search_query,(err,result)=>{
-      if(err){
-        console.log(err)
-      }else{
+router.post("/add-train", (req, res) => {
+  let trainId = req.body.train_no;
+  let trainName = req.body.train_name;
+  console.log(trainId);
+  db.getConnection(async (err, connection) => {
+    if (err) throw err;
+    const sqlSearch = "INSERT INTO train (train_no,train_name) VALUES (?,?)";
+    const search_query = mysql.format(sqlSearch, [trainId, trainName]);
+    await connection.query(search_query, (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
         //console.log('train deleted '+ scheduleId)
-        res.redirect('/')
+        res.redirect("/");
       }
-    })
-  })
-})
-router.post('/add-station',(req,res)=>{
-  let stationId = req.body.station_code
-  let stationName = req.body.station_name
+    });
+  });
+});
+router.post("/add-station", (req, res) => {
+  let stationId = req.body.station_code;
+  let stationName = req.body.station_name;
   //console.log(trainId)
-  db.getConnection(async(err,connection)=>{
-    if (err) throw(err)
-    const sqlSearch = 'INSERT INTO station (station_code,station_name) VALUES (?,?)'
-    const search_query = mysql.format(sqlSearch,[stationId,stationName])
-    await connection.query(search_query,(err,result)=>{
-      if(err){
-        console.log(err)
-      }else{
+  db.getConnection(async (err, connection) => {
+    if (err) throw err;
+    const sqlSearch =
+      "INSERT INTO station (station_code,station_name) VALUES (?,?)";
+    const search_query = mysql.format(sqlSearch, [stationId, stationName]);
+    await connection.query(search_query, (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
         //console.log('train deleted '+ scheduleId)
-        res.redirect('/')
+        res.redirect("/");
       }
-    })
-  })
-})
-router.post('/add-schedule',(req,res)=>{
-  let scheduleId = req.body.schedule_id
-  let trainId = req.body.train_id
-  let source = req.body.source
-  let destination = req.body.destination
-  let departure = req.body.departure_time
-  let arrival = req.body.arrival_time
+    });
+  });
+});
+router.post("/add-schedule", (req, res) => {
+  console.log("inside add schedule");
+  let scheduleId = req.body.schedule_id;
+  let trainId = req.body.train_id;
+  let source = req.body.source;
+  let destination = req.body.destination;
+  let departure = req.body.departure_time;
+  let arrival = req.body.arrival_time;
   //console.log(trainId)
-  db.getConnection(async(err,connection)=>{
-    if (err) throw(err)
-    const sqlSearch = 'INSERT INTO schedule (schedule_id,train_id,source,destination,departure_time,arrival_time) VALUES (?,?,?,?,?,?)'
-    const search_query = mysql.format(sqlSearch,[scheduleId,trainId,source,destination,departure,arrival])
-    await connection.query(search_query,(err,result)=>{
-      if(err){
-        console.log(err)
-      }else{
+  db.getConnection(async (err, connection) => {
+    if (err) throw err;
+    const sqlSearch =
+      "INSERT INTO schedule (schedule_id,train_id,source,destination,departure_time,arrival_time) VALUES (?,?,?,?,?,?)";
+    const search_query = mysql.format(sqlSearch, [
+      scheduleId,
+      trainId,
+      source,
+      destination,
+      departure,
+      arrival,
+    ]);
+    await connection.query(search_query, (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
         //console.log('train deleted '+ scheduleId)
-        res.redirect('/')
+        res.redirect("/");
       }
-    })
-  })
-})
+    });
+  });
+});
 module.exports = router;
