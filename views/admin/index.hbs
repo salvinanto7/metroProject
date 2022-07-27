@@ -1,8 +1,165 @@
 <section>
-    <div class="container-fluid">
-        <div class="row">
-            <h2>Welcome {{user}}</h2>
-
+  <div class='container-fluid'>
+    <div class='row d-flex justify-content-center p-5'>
+      <div
+        class='nav nav-tabs mb-5'
+        id='nav-tab'
+        role='tablist'
+        style='width:90%'
+      >
+        <a
+          class='nav-item nav-link p-3 active'
+          id='nav-home-tab'
+          data-toggle='tab'
+          href='#nav-home'
+          role='tab'
+          aria-controls='nav-home'
+          aria-selected='true'
+        >
+          Schedules
+        </a>
+        <a
+          class='nav-item  p-3 nav-link'
+          id='nav-profile-tab'
+          data-toggle='tab'
+          href='#nav-profile'
+          role='tab'
+          aria-controls='nav-profile'
+          aria-selected='false'
+        >
+          Trains
+        </a>
+        <a
+          class='nav-item p-3 nav-link'
+          id='nav-contact-tab'
+          data-toggle='tab'
+          href='#nav-contact'
+          role='tab'
+          aria-controls='nav-contact'
+          aria-selected='false'
+        >
+          Stations
+        </a>
+      </div>
+      <div class='tab-content w-75' id='nav-tabContent'>
+        <div
+          class='tab-pane fade show active'
+          id='nav-home'
+          role='tabpanel'
+          aria-labelledby='nav-home-tab'
+        >
+          <table class='table table-hover'>
+            <thead>
+              <tr>
+                <th scope='col'>
+                  Schedule Id
+                </th>
+                <th scope='col'>
+                    Train Id
+                </th>
+                <th scope='col'>
+                    Start(source)
+                </th>
+                <th scope='col'>
+                    Destination
+                </th>
+                <th scope='col'>
+                    Departure Time
+                </th>
+                <th scope='col'>
+                    Arrival Time
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+                {{#each schedule_res}}
+              <tr>
+                <th scope='row'>
+                    {{this.schedule_id}}
+                </th>
+                <td>
+                    {{this.train_id}}
+                </td>
+                <td>
+                  {{this.source}}
+                </td>
+                <td>
+                  {{this.destination}}
+                </td>
+                <td>
+                  {{this.departure_time}}
+                </td>
+                <td>
+                  {{this.arrival_time}}
+                </td>
+              </tr>
+              {{/each}}
+            </tbody>
+          </table>
         </div>
+        <div
+          class='tab-pane fade'
+          id='nav-profile'
+          role='tabpanel'
+          aria-labelledby='nav-profile-tab'
+        >
+          <table class='table table-hover'>
+            <thead>
+              <tr>
+                <th scope='col'>
+                  Train No
+                </th>
+                <th scope='col'>
+                    Train Name
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+                {{#each train_res}}
+              <tr>
+                <th scope='row'>
+                    {{this.train_no}}
+                </th>
+                <td>
+                    {{this.train_name}}
+                </td>
+              </tr>
+              {{/each}}
+            </tbody>
+          </table>
+        </div>
+        <div
+          class='tab-pane fade'
+          id='nav-contact'
+          role='tabpanel'
+          aria-labelledby='nav-contact-tab'
+        >
+          <table class='table table-hover'>
+            <thead>
+              <tr>
+                <th scope='col'>
+                  Station Code
+                </th>
+                <th scope='col'>
+                    Station Name
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+                {{#each station_res}}
+              <tr>
+                <th scope='row'>
+                    {{this.station_code}}
+                </th>
+                <td>
+                    {{this.station_name}}
+                </td>
+              </tr>
+              {{/each}}
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
+  </div>
 </section>
