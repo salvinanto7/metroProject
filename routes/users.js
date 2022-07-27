@@ -1,5 +1,9 @@
 var express = require('express');
 var router = express.Router();
+//var userHelpers = require('./helpers/userHelpers');
+var db = require('../db');
+var bcrypt = require('bcrypt');
+var mysql = require('mysql');
 
 const verifyLogin=(req,res,next)=>{
   if (req.session.loggedIn){
@@ -31,27 +35,65 @@ router.get('/contact',(req,res)=>{
 
 router.get('/login',(req,res)=>{
   res.render('user/login',{admin:false})
-  //if(req.session.loggedin){
-  //  res.redirect('/');
-  //}
-  //else{
-  //  res.render('user/login',{loginErr:req.session.loginErr});
-  //  req.session.loginErr = false;
-  //}
+  if(req.session.loggedIn){
+    res.redirect('/');
+  }
+  else{
+    res.render('user/login',{loginErr:req.session.loginErr});
+    req.session.loginErr = false;
+  }
 });
 
 router.get('/signup',(req,res)=>{
   res.render('user/signup',{admin:false});
 });
 
-router.post('/signup',(req,res)=>{
-  //console.log(req.body)
-  userHelpers.doSignup(req.body).then((response)=>{
-    console.log(response);
-    req.session.loggedIn=true;
-    req.session.user = response;
-  })
-});
+//router.post('/signup',(req,res)=>{
+//  //console.log(req.body)
+//  userHelpers.doSignup(req.body).then((response)=>{
+//    console.log(response);
+//    //req.session.loggedIn=true;
+//    //req.session.user = response;
+//  })
+//});
+
+router.post("/signup", async (req,res) => {
+  const firstName = req.body.firstname;
+  const lastName = req.body.lastname;
+  const age = req.body.age;
+  const phone = req.body.phone;
+  const email = req.body.email;
+  const username = req.body.username;
+  const hashedPassword = await bcrypt.hash(req.body.password,10);
+  db.getConnection( async (err, connection) => { 
+    if (err) throw (err) 
+    const sqlSearch = "SELECT * FROM user WHERE first_name = ?"
+    const search_query = mysql.format(sqlSearch,[firstName]) 
+    const sqlInsert = "INSERT INTO user VALUES (?,?,?,?,?,?,?,0)"
+    const insert_query = mysql.format(sqlInsert,[hashedPassword,firstName,lastName,age,phone,email,username])
+   // ? will be replaced by values
+   // ?? will be replaced by string 
+    await connection.query (search_query, async (err, result) => {  if (err) throw (err)
+     console.log("------> Search Results")
+     console.log(result.length)  
+     if (result.length != 0) {
+     connection.release()
+     console.log("------> User already exists")
+     res.redirect('/')
+    } 
+    else {
+     await connection.query (insert_query, (err, result)=> {   
+      connection.release()   
+      if (err) throw (err)
+      console.log ("--------> Created new User")
+      console.log(result.insertId)
+      req.session.loggedIn = true;
+      req.session.user = firstName;
+      res.redirect('/login')
+    })
+   }}) //end of connection.query()
+  }) //end of db.getConnection()
+}) //end of app.post()
 
 router.post('/login',(req,res)=>{
   userHelpers.doLogin(req.body).then((response)=>{

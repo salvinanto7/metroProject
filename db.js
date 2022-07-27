@@ -6,9 +6,9 @@ const pool  = mysql.createPool({
     password        : '',
     database        : 'metro_yathra'
   })
-//   pool.getConnection((err, connection) => {
-//     if(err) throw err
-//     console.log('connected as id ' + connection.threadId)
+   pool.getConnection((err, connection) => {
+     if(err) throw err
+     console.log('connected as id ' + connection.threadId)
 //     connection.query('SELECT * from train', (err, rows) => {
 //         connection.release() // return the connection to pool
 
@@ -22,5 +22,5 @@ const pool  = mysql.createPool({
 //         // if(err) throw err
 //         console.log('The data from train table are: \n', rows)
 //     })
-// })
+ })
   module.exports=pool;
