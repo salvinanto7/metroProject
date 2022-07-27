@@ -18,7 +18,7 @@ app.engine('hbs',hbs.engine({extname:'hbs',defaultLayout:'layout',layoutsDir:__d
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(session({secret:"key",cookie:{maxAge:600000}}));
+app.use(session({secret:"key",cookie:{maxAge:1800000}}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 

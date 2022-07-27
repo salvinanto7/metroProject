@@ -92,6 +92,25 @@
                   <td>
                     {{this.arrival_time}}
                   </td>
+                  <td>
+                    <a
+                      class='btn btn-primary'
+                      href="/edit-schedule/{{this.schedule_id}}"
+                    >
+                      Edit
+                    </a>
+                  </td>
+                  <td>
+                    <a
+                      class='btn btn-danger'
+                      href="/delete-schedule/{{this.schedule_id}}"
+                      onclick="return confirm('Are you sure to delete {{
+                        this.name
+                      }}?')"
+                    >
+                      Delete
+                    </a>
+                  </td>
                 </tr>
               {{/each}}
             </tbody>
@@ -122,6 +141,25 @@
                   </th>
                   <td>
                     {{this.train_name}}
+                  </td>
+                  <td>
+                    <a
+                      class='btn btn-primary'
+                      href="/edit-train/{{this.train_no}}"
+                    >
+                      Edit
+                    </a>
+                  </td>
+                  <td>
+                    <a
+                      class='btn btn-danger'
+                      href="/delete-train/{{this.train_no}}"
+                      onclick="return confirm('Are you sure to delete {{
+                        this.name
+                      }}?')"
+                    >
+                      Delete
+                    </a>
                   </td>
                 </tr>
               {{/each}}
@@ -154,6 +192,25 @@
                   <td>
                     {{this.station_name}}
                   </td>
+                  <td>
+                    <a
+                      class='btn btn-primary'
+                      href="/edit-station/{{this.station_code}}"
+                    >
+                      Edit
+                    </a>
+                  </td>
+                  <td>
+                    <a
+                      class='btn btn-danger'
+                      href="/delete-station/{{this.station_code}}"
+                      onclick="return confirm('Are you sure to delete {{
+                        this.name
+                      }}?')"
+                    >
+                      Delete
+                    </a>
+                  </td>
                 </tr>
               {{/each}}
             </tbody>
@@ -163,4 +220,3 @@
     </div>
   </div>
 </section>
-

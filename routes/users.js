@@ -204,4 +204,65 @@ router.get('/logout',(req,res)=>{
   res.redirect('/login');
 });
 
+
+
+
+// admin routers 
+
+
+router.get('/delete-schedule/:id',(req,res)=>{
+  let scheduleId = req.params.id
+  //console.log(scheduleId)
+  db.getConnection(async(err,connection)=>{
+    if (err) throw(err)
+    const sqlSearch = 'DELETE FROM schedule WHERE schedule.schedule_id = ?'
+    const search_query = mysql.format(sqlSearch,[scheduleId])
+    await connection.query(search_query,(err,result)=>{
+      if(err){
+        console.log(err)
+      }else{
+        console.log('schedule deleted '+ scheduleId)
+        res.redirect('/')
+      }
+    })
+  })
+})
+
+router.get('/delete-station/:id',(req,res)=>{
+  let stationId = req.params.id
+  //console.log(stationId)
+  db.getConnection(async(err,connection)=>{
+    if (err) throw(err)
+    const sqlSearch = 'DELETE FROM station WHERE station.station_code = ?'
+    const search_query = mysql.format(sqlSearch,[stationId])
+    await connection.query(search_query,(err,result)=>{
+      if(err){
+        console.log(err)
+      }else{
+        //console.log('station deleted '+ scheduleId)
+        res.redirect('/')
+      }
+    })
+  })
+})
+
+router.get('/delete-train/:id',(req,res)=>{
+  let trainId = req.params.id
+  //console.log(stationId)
+  db.getConnection(async(err,connection)=>{
+    if (err) throw(err)
+    const sqlSearch = 'DELETE FROM train WHERE train.train_no = ?'
+    const search_query = mysql.format(sqlSearch,[trainId])
+    await connection.query(search_query,(err,result)=>{
+      if(err){
+        console.log(err)
+      }else{
+        //console.log('train deleted '+ scheduleId)
+        res.redirect('/')
+      }
+    })
+  })
+})
+
+
 module.exports = router;
