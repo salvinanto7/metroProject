@@ -15,33 +15,33 @@ const verifyLogin=(req,res,next)=>{
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-
-  res.render('user/index',{admin:false});
+  let user = req.session.user
+  res.render('user/index',{admin:false,user});
 });
 
 router.get('/train',(req,res)=>{
-  res.render('user/train',{admin:false})
+  res.render('user/train',{admin:false,user:req.session.user})
 });
 
 router.get('/ticket',(req,res)=>{
-  res.render('user/ticket',{admin:false})
+  res.render('user/ticket',{admin:false,user:req.session.user})
 });
 router.get('/about',(req,res)=>{
-  res.render('user/about',{admin:false})
+  res.render('user/about',{admin:false,user:req.session.user})
 });
 router.get('/contact',(req,res)=>{
-  res.render('user/contact',{admin:false})
+  res.render('user/contact',{admin:false,user:req.session.user})
 });
 
 router.get('/login',(req,res)=>{
   res.render('user/login',{admin:false})
-  //if(req.session.loggedIn){
-  //  res.redirect('/');
-  //}
-  //else{
-  //  res.render('user/login',{loginErr:req.session.loginErr});
-  //  req.session.loginErr = false;
-  //}
+  if(req.session.loggedIn){
+    res.redirect('/');
+  }
+  else{
+    res.render('user/login',{loginErr:req.session.loginErr});
+    req.session.loginErr = false;
+  }
 });
 
 router.get('/signup',(req,res)=>{
@@ -126,6 +126,7 @@ router.post('/login',(req,res)=>{
         res.redirect('/login');
       }else{
         const dbPassword = result[0].password;
+        const name = result[0].first_name;
         console.log(result)
         //console.log(password)
         //var test
@@ -133,9 +134,10 @@ router.post('/login',(req,res)=>{
         //console.log(test)
         if(password===dbPassword){
           console.log(email+ ' logged in successfully');
-          //res.session.user = email;
-          //res.redirect('/',{user:res.session.user})
+          req.session.loggedIn = true;
+          req.session.user = name;
           res.redirect('/')
+          //res.redirect('/')
         }else{
           console.log("password incorrect");
           res.send("password incorrect");

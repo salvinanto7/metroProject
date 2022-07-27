@@ -9,7 +9,7 @@ var adminRouter = require('./routes/admin');
 var usersRouter = require('./routes/users');
 var hbs = require('express-handlebars');
 var app = express();
-
+var session  =require('express-session');
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
@@ -18,6 +18,7 @@ app.engine('hbs',hbs.engine({extname:'hbs',defaultLayout:'layout',layoutsDir:__d
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(session({secret:"key",cookie:{maxAge:600000}}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
