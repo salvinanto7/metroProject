@@ -177,8 +177,15 @@ router.get("/about", (req, res) => {
 router.get("/contact", (req, res) => {
   res.render("user/contact", { admin: false, user: req.session.user });
 });
+<<<<<<< HEAD
 
 router.get("/login", (req, res) => {
+=======
+router.get('/no-access',(req,res)=>{
+  res.render('user/no-access')
+})
+router.get('/login',(req,res)=>{
+>>>>>>> 6ca666cc49118f6774cb2599853b6398ddce080b
   //res.render('user/login',{admin:false})
   if (req.session.loggedIn) {
     res.redirect("/");
@@ -315,6 +322,7 @@ router.get("/logout", (req, res) => {
 router.get("/delete-schedule/:id", (req, res) => {
   let scheduleId = req.params.id;
   //console.log(scheduleId)
+<<<<<<< HEAD
   db.getConnection(async (err, connection) => {
     if (err) throw err;
     const sqlSearch = "DELETE FROM schedule WHERE schedule.schedule_id = ?";
@@ -329,10 +337,33 @@ router.get("/delete-schedule/:id", (req, res) => {
     });
   });
 });
+=======
+  //console.log(req.session.id)
+  //console.log(req.session.user)
+  if(req.session.admin){
+  db.getConnection(async(err,connection)=>{
+    if (err) throw(err)
+    const sqlSearch = 'DELETE FROM schedule WHERE schedule.schedule_id = ?'
+    const search_query = mysql.format(sqlSearch,[scheduleId])
+    await connection.query(search_query,(err,result)=>{
+      if(err){
+        console.log(err)
+      }else{
+        console.log('schedule deleted '+ scheduleId)
+        res.redirect('/')
+      }
+    })
+  })
+}else{
+  res.redirect('../no-access')
+}
+})
+>>>>>>> 6ca666cc49118f6774cb2599853b6398ddce080b
 
 router.get("/delete-station/:id", (req, res) => {
   let stationId = req.params.id;
   //console.log(stationId)
+<<<<<<< HEAD
   db.getConnection(async (err, connection) => {
     if (err) throw err;
     const sqlSearch = "DELETE FROM station WHERE station.station_code = ?";
@@ -341,16 +372,36 @@ router.get("/delete-station/:id", (req, res) => {
       if (err) {
         console.log(err);
       } else {
+=======
+  if(req.session.admin){
+  db.getConnection(async(err,connection)=>{
+    if (err) throw(err)
+    const sqlSearch = 'DELETE FROM station WHERE station.station_code = ?'
+    const search_query = mysql.format(sqlSearch,[stationId])
+    await connection.query(search_query,(err,result)=>{
+      if(err){
+        console.log(err)
+      }else{
+>>>>>>> 6ca666cc49118f6774cb2599853b6398ddce080b
         //console.log('station deleted '+ scheduleId)
         res.redirect("/");
       }
+<<<<<<< HEAD
     });
   });
 });
+=======
+    })
+  })}else{
+    res.redirect('../no-access')
+  }
+})
+>>>>>>> 6ca666cc49118f6774cb2599853b6398ddce080b
 
 router.get("/delete-train/:id", (req, res) => {
   let trainId = req.params.id;
   //console.log(stationId)
+<<<<<<< HEAD
   db.getConnection(async (err, connection) => {
     if (err) throw err;
     const sqlSearch = "DELETE FROM train WHERE train.train_no = ?";
@@ -359,16 +410,36 @@ router.get("/delete-train/:id", (req, res) => {
       if (err) {
         console.log(err);
       } else {
+=======
+  if(req.session.admin){
+  db.getConnection(async(err,connection)=>{
+    if (err) throw(err)
+    const sqlSearch = 'DELETE FROM train WHERE train.train_no = ?'
+    const search_query = mysql.format(sqlSearch,[trainId])
+    await connection.query(search_query,(err,result)=>{
+      if(err){
+        console.log(err)
+      }else{
+>>>>>>> 6ca666cc49118f6774cb2599853b6398ddce080b
         //console.log('train deleted '+ scheduleId)
         res.redirect("/");
       }
+<<<<<<< HEAD
     });
   });
 });
+=======
+    })
+  })}else{
+    res.redirect('../no-access')
+  }
+})
+>>>>>>> 6ca666cc49118f6774cb2599853b6398ddce080b
 
 router.get("/edit-train/:id", (req, res) => {
   let trainId = req.params.id;
   //console.log(stationId)
+<<<<<<< HEAD
   db.getConnection(async (err, connection) => {
     if (err) throw err;
     const sqlSearch = "SELECT * FROM train WHERE train.train_no = ?";
@@ -377,11 +448,23 @@ router.get("/edit-train/:id", (req, res) => {
       if (err) {
         console.log(err);
       } else {
+=======
+  if(req.session.admin){
+  db.getConnection(async(err,connection)=>{
+    if (err) throw(err)
+    const sqlSearch = 'SELECT * FROM train WHERE train.train_no = ?'
+    const search_query = mysql.format(sqlSearch,[trainId])
+    await connection.query(search_query,(err,result)=>{
+      if(err){
+        console.log(err)
+      }else{
+>>>>>>> 6ca666cc49118f6774cb2599853b6398ddce080b
         //console.log('train deleted '+ scheduleId)
         let trainData = Object.values(JSON.parse(JSON.stringify(result)));
         console.log(trainData[0]);
         res.render("admin/edit-train", { train: trainData[0] });
       }
+<<<<<<< HEAD
     });
   });
 });
@@ -396,11 +479,31 @@ router.get("/edit-schedule/:id", (req, res) => {
       if (err) {
         console.log(err);
       } else {
+=======
+    })
+  })}else{
+    res.redirect('../no-access')
+  }
+})
+router.get('/edit-schedule/:id',(req,res)=>{
+  let scheduleId = req.params.id
+  //console.log(stationId)
+  if(req.session.admin){
+  db.getConnection(async(err,connection)=>{
+    if (err) throw(err)
+    const sqlSearch = 'SELECT * FROM schedule WHERE schedule.schedule_id = ?'
+    const search_query = mysql.format(sqlSearch,[scheduleId])
+    await connection.query(search_query,(err,result)=>{
+      if(err){
+        console.log(err)
+      }else{
+>>>>>>> 6ca666cc49118f6774cb2599853b6398ddce080b
         //console.log('train deleted '+ scheduleId)
         let scheduleData = Object.values(JSON.parse(JSON.stringify(result)));
         //console.log(scheduleData[0])
         res.render("admin/edit-schedule", { schedule: scheduleData[0] });
       }
+<<<<<<< HEAD
     });
   });
 });
@@ -415,14 +518,41 @@ router.get("/edit-station/:id", (req, res) => {
       if (err) {
         console.log(err);
       } else {
+=======
+    })
+  })}else{
+    res.redirect('../no-access')
+  }
+})
+router.get('/edit-station/:id',(req,res)=>{
+  let stationId = req.params.id
+  //console.log(stationId)
+  if(req.session.admin){
+  db.getConnection(async(err,connection)=>{
+    if (err) throw(err)
+    const sqlSearch = 'SELECT * FROM station WHERE station.station_code = ?'
+    const search_query = mysql.format(sqlSearch,[stationId])
+    await connection.query(search_query,(err,result)=>{
+      if(err){
+        console.log(err)
+      }else{
+>>>>>>> 6ca666cc49118f6774cb2599853b6398ddce080b
         //console.log('train deleted '+ scheduleId)
         let stationData = Object.values(JSON.parse(JSON.stringify(result)));
         console.log(stationData[0]);
         res.render("admin/edit-station", { station: stationData[0] });
       }
+<<<<<<< HEAD
     });
   });
 });
+=======
+    })
+  })}else{
+    res.redirect('../no-access')
+  }
+})
+>>>>>>> 6ca666cc49118f6774cb2599853b6398ddce080b
 
 router.post("/edit-station/:id", (req, res) => {
   let stationId = req.params.id;
@@ -560,6 +690,7 @@ router.post("/edit-schedule/:id", (req, res) => {
   });
 });
 
+<<<<<<< HEAD
 router.get("/add-train", (req, res) => {
   res.render("admin/add-train");
 });
@@ -569,6 +700,23 @@ router.get("/add-schedule", (req, res) => {
 router.get("/add-station", (req, res) => {
   res.render("admin/add-station");
 });
+=======
+router.get('/add-train',(req,res)=>{
+  if(req.session.admin){
+  res.render('admin/add-train');
+  }else{res.redirect('../no-access')}
+})
+router.get('/add-schedule',(req,res)=>{
+  if(req.session.admin){
+    res.render('admin/add-schedule');
+    }else{res.redirect('../no-access')}
+})
+router.get('/add-station',(req,res)=>{
+  if(req.session.admin){
+    res.render('admin/add-station');
+    }else{res.redirect('../no-access')}
+})
+>>>>>>> 6ca666cc49118f6774cb2599853b6398ddce080b
 
 router.post("/add-train", (req, res) => {
   let trainId = req.body.train_no;
