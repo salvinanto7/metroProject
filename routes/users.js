@@ -65,13 +65,13 @@ router.post("/signup", async (req,res) => {
   const email = req.body.email;
   const username = req.body.username;
   const password = req.body.password;
-  //const hashedPassword = await bcrypt.hash(req.body.password,10);
+  const hashedPassword = await bcrypt.hash(req.body.password,10);
   db.getConnection( async (err, connection) => { 
     if (err) throw (err) 
     const sqlSearch = "SELECT * FROM user WHERE email = ?"
     const search_query = mysql.format(sqlSearch,[email]) 
     const sqlInsert = "INSERT INTO user VALUES (?,?,?,?,?,?,?,0)"
-    const insert_query = mysql.format(sqlInsert,[password,firstName,lastName,age,phone,email,username])
+    const insert_query = mysql.format(sqlInsert,[hashedPassword,firstName,lastName,age,phone,email,username])
    // ? will be replaced by values
    // ?? will be replaced by string 
     await connection.query (search_query, async (err, result) => {  if (err) throw (err)
@@ -88,8 +88,8 @@ router.post("/signup", async (req,res) => {
       if (err) throw (err)
       console.log ("--------> Created new User")
       console.log(result.insertId)
-      //req.session.loggedIn = true;
-      //req.session.user = firstName;
+      req.session.loggedIn = true;
+      req.session.user = firstName;
       res.redirect('/login')
     })
    }}) //end of connection.query()
@@ -132,7 +132,8 @@ router.post('/login',(req,res)=>{
         //var test
         //test = await bcrypt.hash(password,10)
         //console.log(test)
-        if(password===dbPassword){
+        //if(password===dbPassword){
+        if (bcrypt.compare(password,dbPassword)){
           console.log(email+ ' logged in successfully');
           req.session.loggedIn = true;
           req.session.user = name;
