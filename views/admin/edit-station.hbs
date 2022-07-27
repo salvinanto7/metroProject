@@ -3,7 +3,7 @@
         <div class="row">
             <h3>Edit Train</h3>
             <div class='col-md-6'>
-        <form action="/edit-train/{{station.station_code}}" method="POST">
+        <form action="/edit-station/{{station.station_code}}" method="POST">
           <div class='form-group mt-4 pt-5'>
             <label for=''>
               Station Code
@@ -29,7 +29,7 @@
             />
           </div>
           
-          <button type='submit' class='btn btn-primary mt-4' onclick="return confirm('Are you sure you want to update {{train.train_name}}?')">
+          <button type='submit' class='btn btn-primary mt-4' onclick="return confirm('Are you sure you want to update {{station.station_name}}?')">
             Update
           </button>
         </form>
