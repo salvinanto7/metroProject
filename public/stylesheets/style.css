@@ -8,6 +8,6 @@ body{
   scrollbar-width:none;
   -ms-overflow-style: none;
   font-family: 'Gothic A1',sans-serif;
-  overflow-y:hidden;
+  /* overflow-y:hidden; */
   font: large;
 }

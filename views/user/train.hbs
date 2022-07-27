@@ -1,3 +1,40 @@
 <section>
     <h4>Trains Available</h4>
+    <div class="container">
+        <div class="row mt-5 d-flex justify-content-center">
+
+            <form action="/search" method="POST" style="width:80%">
+      
+
+                <div class="form-group mt-3">
+                    <div class="row">
+                        <div class="col">
+                            <label for="source">Choose a starting point :</label>
+                            <select name="source" id="source">
+                                {{#each station_res}}
+
+                                <option value="{{this.station_code}}">{{this.station_name}}</option>
+                                 {{/each}}
+                            </select>
+                            {{!-- <input type="text" class='form-control' name='source' placeholder='source' /> --}}
+                        </div>
+                        <div class="col">
+                            <label for="destination">Choose a destination point :</label>
+                            <select name="destination" id="destination">
+                                {{#each station_res}}
+
+                                <option value="{{this.station_code}}">{{this.station_name}}</option>
+                                 {{/each}}
+                            </select>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary mt-3">
+                        Search
+                    </button>
+                    {{#if loginErr}}
+                    <p class="alert alert-danger alert-dismissible fade show mt-5">{{loginErr}}</p>
+                    {{/if}}
+            </form>
+        </div>
+    </div>
 </section>
