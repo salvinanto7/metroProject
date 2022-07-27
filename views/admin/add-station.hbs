@@ -1,19 +1,18 @@
 <section>
-    <div class="container pt-5">
-        <div class="row">
-            <h3>Edit Train</h3>
-            <div class='col-md-6'>
-        <form action="/edit-station/{{station.station_code}}" method="POST">
-          <div class='form-group mt-4 pt-5'>
+  <div class='container mt-5'>
+    <h4>Add Station</h4>
+    <div class='rowmt-5'>
+      <div class='col-md-6'>
+        <form action="/add-station" method="POST" >
+          <div class='form-group mt-4'>
             <label for=''>
-              Station Code
+             Station Code
             </label>
             <input
               type='text'
               class='form-control'
               name="station_code"
               placeholder='Station Code'
-              value="{{station.station_code}}"
             />
           </div>
           <div class='form-group mt-4'>
@@ -25,15 +24,13 @@
               class='form-control'
               name="station_name"
               placeholder='Station name'
-              value="{{station.station_name}}"
             />
           </div>
-          
-          <button type='submit' class='btn btn-primary mt-4' onclick="return confirm('Are you sure you want to update {{station.station_name}}?')">
-            Update
+          <button type='submit' class='btn btn-primary mt-4'>
+            Submit
           </button>
         </form>
       </div>
-        </div>
     </div>
+  </div>
 </section>

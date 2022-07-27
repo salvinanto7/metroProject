@@ -1,19 +1,18 @@
 <section>
-    <div class="container pt-5">
-        <div class="row">
-            <h3>Edit Schedule</h3>
-            <div class='col-md-6'>
-        <form action="/edit-schedule/{{schedule.schedule_id}}" method="POST">
-          <div class='form-group mt-4 pt-5'>
+  <div class='container mt-5'>
+    <h4>Add Schedule</h4>
+    <div class='row mt-5'>
+      <div class='col-md-6'>
+        <form action="/add-schedule" method="POST" >
+          <div class='form-group mt-4'>
             <label for=''>
-              Schedule Id
+             Schedule Id
             </label>
             <input
               type='text'
               class='form-control'
               name="schedule_id"
               placeholder='Schedule Id'
-              value="{{schedule.schedule_id}}"
             />
           </div>
           <div class='form-group mt-4'>
@@ -24,8 +23,7 @@
               type='text'
               class='form-control'
               name="train_id"
-              placeholder='Train id'
-              value="{{schedule.train_id}}"
+              placeholder='Train Id'
             />
           </div>
           <div class='form-group mt-4'>
@@ -37,7 +35,6 @@
               class='form-control'
               name="source"
               placeholder='Source'
-              value="{{schedule.source}}"
             />
           </div>
           <div class='form-group mt-4'>
@@ -49,7 +46,6 @@
               class='form-control'
               name="destination"
               placeholder='Destination'
-              value="{{schedule.destination}}"
             />
           </div>
           <div class='form-group mt-4'>
@@ -60,8 +56,7 @@
               type='text'
               class='form-control'
               name="departure_time"
-              placeholder='Departure Time'
-              value="{{schedule.departure_time}}"
+              placeholder='Departure time'
             />
           </div>
           <div class='form-group mt-4'>
@@ -73,15 +68,13 @@
               class='form-control'
               name="arrival_time"
               placeholder='Arrival Time'
-              value="{{schedule.arrival_time}}"
             />
           </div>
-          
-          <button type='submit' class='btn btn-primary mt-4' onclick="return confirm('Are you sure you want to update {{schedule.schedule_id}}?')">
-            Update
+          <button type='submit' class='btn btn-primary mt-4'>
+            Submit
           </button>
         </form>
       </div>
-        </div>
     </div>
+  </div>
 </section>
