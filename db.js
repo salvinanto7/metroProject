@@ -12,12 +12,12 @@ const pool  = mysql.createPool({
 //     connection.query('SELECT * from train', (err, rows) => {
 //         connection.release() // return the connection to pool
 
-        if (!err) {
-            console.log(rows)
+        // if (!err) {
+        //     console.log(rows)
             
-        } else {
-            console.log(err)
-        }
+        // } else {
+        //     console.log(err)
+        // }
 
 //         // if(err) throw err
 //         console.log('The data from train table are: \n', rows)
