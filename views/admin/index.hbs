@@ -55,44 +55,44 @@
                   Schedule Id
                 </th>
                 <th scope='col'>
-                    Train Id
+                  Train Id
                 </th>
                 <th scope='col'>
-                    Start(source)
+                  Start(source)
                 </th>
                 <th scope='col'>
-                    Destination
+                  Destination
                 </th>
                 <th scope='col'>
-                    Departure Time
+                  Departure Time
                 </th>
                 <th scope='col'>
-                    Arrival Time
+                  Arrival Time
                 </th>
               </tr>
             </thead>
             <tbody>
-                {{#each schedule_res}}
-              <tr>
-                <th scope='row'>
+              {{#each schedule_res}}
+                <tr>
+                  <th scope='row'>
                     {{this.schedule_id}}
-                </th>
-                <td>
+                  </th>
+                  <td>
                     {{this.train_id}}
-                </td>
-                <td>
-                  {{this.source}}
-                </td>
-                <td>
-                  {{this.destination}}
-                </td>
-                <td>
-                  {{this.departure_time}}
-                </td>
-                <td>
-                  {{this.arrival_time}}
-                </td>
-              </tr>
+                  </td>
+                  <td>
+                    {{this.source}}
+                  </td>
+                  <td>
+                    {{this.destination}}
+                  </td>
+                  <td>
+                    {{this.departure_time}}
+                  </td>
+                  <td>
+                    {{this.arrival_time}}
+                  </td>
+                </tr>
               {{/each}}
             </tbody>
           </table>
@@ -110,20 +110,20 @@
                   Train No
                 </th>
                 <th scope='col'>
-                    Train Name
+                  Train Name
                 </th>
               </tr>
             </thead>
             <tbody>
-                {{#each train_res}}
-              <tr>
-                <th scope='row'>
+              {{#each train_res}}
+                <tr>
+                  <th scope='row'>
                     {{this.train_no}}
-                </th>
-                <td>
+                  </th>
+                  <td>
                     {{this.train_name}}
-                </td>
-              </tr>
+                  </td>
+                </tr>
               {{/each}}
             </tbody>
           </table>
@@ -141,20 +141,20 @@
                   Station Code
                 </th>
                 <th scope='col'>
-                    Station Name
+                  Station Name
                 </th>
               </tr>
             </thead>
             <tbody>
-                {{#each station_res}}
-              <tr>
-                <th scope='row'>
+              {{#each station_res}}
+                <tr>
+                  <th scope='row'>
                     {{this.station_code}}
-                </th>
-                <td>
+                  </th>
+                  <td>
                     {{this.station_name}}
-                </td>
-              </tr>
+                  </td>
+                </tr>
               {{/each}}
             </tbody>
           </table>
@@ -163,3 +163,4 @@
     </div>
   </div>
 </section>
+

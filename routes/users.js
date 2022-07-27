@@ -27,7 +27,7 @@ router.get('/', function(req, res, next) {
         if(err){
           return console.error(err.message)
         }else{
-          schedule_res = result[0]
+          schedule_res =Object.values(JSON.parse(JSON.stringify(result)))
           //console.log(result)
           console.log(schedule_res)
         }
@@ -37,7 +37,7 @@ router.get('/', function(req, res, next) {
         if(err){
           return console.error(err.message)
         }else{
-          train_res = result[0]
+          train_res =Object.values(JSON.parse(JSON.stringify(result)))
           //console.log(result)
           console.log(train_res)
         }
@@ -47,11 +47,13 @@ router.get('/', function(req, res, next) {
         if(err){
           return console.error(err.message)
         }else{
-          station_res = result[0]
+          station_res = Object.values(JSON.parse(JSON.stringify(result)))
           //console.log(result)
           console.log(station_res)
         }
-        res.render('admin/index',{admin,user,schedule_res,train_res,station_res})
+        res.render('admin/index',{admin,user,schedule_res:schedule_res,train_res:train_res,station_res:station_res})
+        //console.log(station_res)
+        //console.log(train_res)
       })
     })
     //console.log(schedule_res)
