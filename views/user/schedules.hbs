@@ -1,0 +1,21 @@
+<section>
+  <h4>Trains Available</h4>
+  <table>
+    <tr>
+      <th>Train No</th>
+      <th>Trip Start</th>
+      <th>Trip End</th>
+      <th>Departure time</th>
+      <th>Arrival time</th>
+    </tr>
+    {{#each schedule_res}}
+      <tr>
+        <td>{{this.train_id}}</td>
+        <td>{{this.sourcename}}</td>
+        <td>{{this.destinationname}}</td>
+        <td>{{this.departure_time}}</td>
+        <td>{{this.arrival_time}}</td>
+      </tr>
+    {{/each}}
+  </table>
+</section>

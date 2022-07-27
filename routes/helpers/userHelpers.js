@@ -6,9 +6,9 @@ var objectId = require('mongodb').ObjectId
 module.exports={
     doSignup:(userData)=>{
         return new Promise(async(resolve,reject)=>{
-            console.log(userData.password)
+            
             userData.password = await bcrypt.hash(userData.password,10)
-            console.log(userData)
+           // console.log(userData)
             //db.get().collection(collection.USER_COL).insertOne(userData).then((data)=>{
             //    resolve(data)
             //})

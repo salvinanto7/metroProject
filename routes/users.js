@@ -70,14 +70,15 @@ router.get("/", async function (req, res, next) {
     res.render("user/index", { admin, user });
   }
 
-  console.log(station_res);
-  console.log(admin);
+  // console.log(station_res);
+  // console.log(admin);
 });
 
 router.get("/train", async (req, res) => {
-  var admin=req.session.admin
-  var user=req.session.user
-  var station_res
+  var admin = req.session.admin;
+  var user = req.session.user;
+  console.log(req.body);
+  var station_res;
   db.getConnection((err, connection) => {
     const station = "SELECT * FROM station;";
     connection.query(station, (err, result) => {
@@ -90,6 +91,76 @@ router.get("/train", async (req, res) => {
       }
       res.render("user/train", { admin, user, station_res: station_res });
       //console.log(station_res)
+      //console.log(train_res)
+    });
+  });
+
+  // res.render("user/train", { admin: false, user: req.session.user });
+});
+router.post("/search", async (req, res) => {
+  var admin = req.session.admin;
+  var user = req.session.user;
+  var station;
+  var schedule_list = [];
+  var schedule_res;
+
+  db.getConnection((err, connection) => {
+    var source = parseInt(req.body.source, 10);
+    var destination = parseInt(req.body.destination, 10);
+    if (source > destination) {
+      station = "SELECT * FROM schedule where source>=? and destination<=?;";
+    } else {
+      station = "SELECT * FROM schedule where source<=? and destination>=?;";
+    }
+    station = mysql.format(station, [source, destination]);
+    connection.query(station, (err, result) => {
+      if (err) {
+        return console.error(err.message);
+      } else {
+        var sourcename;
+        var destinationname;
+        schedule_res = Object.values(JSON.parse(JSON.stringify(result)));
+        schedule_res.forEach((element) => {
+          connection.query(
+            "select station_name from station where station_code=?",
+            [element.source],
+            async (err, station) => {
+              sourcename = Object.values(
+                JSON.parse(JSON.stringify(station[0]))
+              );
+            }
+          );
+          connection.query(
+            "select station_name from station where station_code=?",
+            [element.destination],
+            async (err, station) => {
+              destinationname = Object.values(
+                JSON.parse(JSON.stringify(station[0]))
+              );
+
+              connection.release();
+              schedule_list.push({
+                ...element,
+                sourcename: sourcename[0],
+                destinationname: destinationname[0],
+              });
+              console.log("search query");
+              console.log(schedule_list);
+              //console.log(element)
+            }
+          );
+          // console.log("dummy data");
+          // console.log(sourcename);
+          // console.log(destinationname);
+          // console.log(element);
+        });
+        res.render("user/schedules", {
+          admin,
+          user,
+          schedule_res: schedule_list,
+        });
+      }
+
       //console.log(train_res)
     });
   });
@@ -291,67 +362,66 @@ router.get("/delete-train/:id", (req, res) => {
         //console.log('train deleted '+ scheduleId)
         res.redirect("/");
       }
-    })
-  })
-})
+    });
+  });
+});
 
-router.get('/edit-train/:id',(req,res)=>{
-  let trainId = req.params.id
+router.get("/edit-train/:id", (req, res) => {
+  let trainId = req.params.id;
   //console.log(stationId)
-  db.getConnection(async(err,connection)=>{
-    if (err) throw(err)
-    const sqlSearch = 'SELECT * FROM train WHERE train.train_no = ?'
-    const search_query = mysql.format(sqlSearch,[trainId])
-    await connection.query(search_query,(err,result)=>{
-      if(err){
-        console.log(err)
-      }else{
+  db.getConnection(async (err, connection) => {
+    if (err) throw err;
+    const sqlSearch = "SELECT * FROM train WHERE train.train_no = ?";
+    const search_query = mysql.format(sqlSearch, [trainId]);
+    await connection.query(search_query, (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
         //console.log('train deleted '+ scheduleId)
-        let trainData = Object.values(JSON.parse(JSON.stringify(result)))
-        console.log(trainData[0])
-        res.render('admin/edit-train',{train:trainData[0]})
+        let trainData = Object.values(JSON.parse(JSON.stringify(result)));
+        console.log(trainData[0]);
+        res.render("admin/edit-train", { train: trainData[0] });
       }
-    })
-  })
-})
-router.get('/edit-schedule/:id',(req,res)=>{
-  let scheduleId = req.params.id
+    });
+  });
+});
+router.get("/edit-schedule/:id", (req, res) => {
+  let scheduleId = req.params.id;
   //console.log(stationId)
-  db.getConnection(async(err,connection)=>{
-    if (err) throw(err)
-    const sqlSearch = 'SELECT * FROM schedule WHERE schedule.schedule_id = ?'
-    const search_query = mysql.format(sqlSearch,[scheduleId])
-    await connection.query(search_query,(err,result)=>{
-      if(err){
-        console.log(err)
-      }else{
+  db.getConnection(async (err, connection) => {
+    if (err) throw err;
+    const sqlSearch = "SELECT * FROM schedule WHERE schedule.schedule_id = ?";
+    const search_query = mysql.format(sqlSearch, [scheduleId]);
+    await connection.query(search_query, (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
         //console.log('train deleted '+ scheduleId)
-        let scheduleData = Object.values(JSON.parse(JSON.stringify(result)))
+        let scheduleData = Object.values(JSON.parse(JSON.stringify(result)));
         //console.log(scheduleData[0])
-        res.render('admin/edit-schedule',{schedule:scheduleData[0]})
+        res.render("admin/edit-schedule", { schedule: scheduleData[0] });
       }
-    })
-  })
-})
-router.get('/edit-station/:id',(req,res)=>{
-  let stationId = req.params.id
+    });
+  });
+});
+router.get("/edit-station/:id", (req, res) => {
+  let stationId = req.params.id;
   //console.log(stationId)
-  db.getConnection(async(err,connection)=>{
-    if (err) throw(err)
-    const sqlSearch = 'SELECT * FROM station WHERE station.station_code = ?'
-    const search_query = mysql.format(sqlSearch,[stationId])
-    await connection.query(search_query,(err,result)=>{
-      if(err){
-        console.log(err)
-      }else{
+  db.getConnection(async (err, connection) => {
+    if (err) throw err;
+    const sqlSearch = "SELECT * FROM station WHERE station.station_code = ?";
+    const search_query = mysql.format(sqlSearch, [stationId]);
+    await connection.query(search_query, (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
         //console.log('train deleted '+ scheduleId)
-        let stationData = Object.values(JSON.parse(JSON.stringify(result)))
-        console.log(stationData[0])
-        res.render('admin/edit-station',{station:stationData[0]})
+        let stationData = Object.values(JSON.parse(JSON.stringify(result)));
+        console.log(stationData[0]);
+        res.render("admin/edit-station", { station: stationData[0] });
       }
-    })
-  })
-})
-
+    });
+  });
+});
 
 module.exports = router;
