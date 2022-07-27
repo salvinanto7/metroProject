@@ -1,21 +1,26 @@
 <section>
-  <h4>Trains Available</h4>
-  <table>
-    <tr>
-      <th>Train No</th>
-      <th>Trip Start</th>
-      <th>Trip End</th>
-      <th>Departure time</th>
-      <th>Arrival time</th>
-    </tr>
-    {{#each schedule_res}}
+  <div class="container text-center p-4 text-bold">
+    <h4>Trains Available</h4>
+  </div>
+  <div class="container">
+    <table class="table">
+        <thead>
       <tr>
-        <td>{{this.train_id}}</td>
-        <td>{{this.sourcename}}</td>
-        <td>{{this.destinationname}}</td>
-        <td>{{this.departure_time}}</td>
-        <td>{{this.arrival_time}}</td>
-      </tr>
-    {{/each}}
-  </table>
+        <th  scope="col">Train No</th>
+        <th  scope="col">Trip Start</th>
+        <th  scope="col">Trip End</th>
+        <th  scope="col">Departure time</th>
+        <th  scope="col">Arrival time</th>
+      </tr></thead>
+      {{#each schedule_res}}
+        <tr>
+          <td >{{this.train_id}}</td>
+          <td>{{this.sourcename}}</td>
+          <td>{{this.destinationname}}</td>
+          <td>{{this.departure_time}}</td>
+          <td>{{this.arrival_time}}</td>
+        </tr>
+      {{/each}}
+    </table>
+  </div>
 </section>
