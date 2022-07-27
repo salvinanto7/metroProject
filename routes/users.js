@@ -28,12 +28,7 @@ router.get('/', async function(req, res, next) {
         if(err){
           return console.error(err.message)
         }else{
-<<<<<<< HEAD
-          console.log(result)
-          schedule_res = Object.values(JSON.parse(JSON.stringify(result))); 
-=======
           schedule_res =Object.values(JSON.parse(JSON.stringify(result)))
->>>>>>> af1e7388dd25697ffa7cb8409919d4f74d0ead8e
           //console.log(result)
           //console.log(schedule_res)
         }
