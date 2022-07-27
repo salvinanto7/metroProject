@@ -72,6 +72,7 @@
               </tr>
             </thead>
             <tbody>
+                
                 {{#each schedule_res}}
               <tr>
                 <th scope='row'>
@@ -118,7 +119,7 @@
                 {{#each train_res}}
               <tr>
                 <th scope='row'>
-                    {{this.train_no}}
+                    {{train_no}}
                 </th>
                 <td>
                     {{this.train_name}}
@@ -146,9 +147,11 @@
               </tr>
             </thead>
             <tbody>
+               
                 {{#each station_res}}
               <tr>
                 <th scope='row'>
+                    {{log station_code}}
                     {{this.station_code}}
                 </th>
                 <td>
