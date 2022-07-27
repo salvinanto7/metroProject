@@ -78,7 +78,9 @@ router.get('/about',(req,res)=>{
 router.get('/contact',(req,res)=>{
   res.render('user/contact',{admin:false,user:req.session.user})
 });
-
+router.get('/no-access',(req,res)=>{
+  res.render('user/no-access')
+})
 router.get('/login',(req,res)=>{
   //res.render('user/login',{admin:false})
   if(req.session.loggedIn){
@@ -213,6 +215,9 @@ router.get('/logout',(req,res)=>{
 router.get('/delete-schedule/:id',(req,res)=>{
   let scheduleId = req.params.id
   //console.log(scheduleId)
+  //console.log(req.session.id)
+  //console.log(req.session.user)
+  if(req.session.admin){
   db.getConnection(async(err,connection)=>{
     if (err) throw(err)
     const sqlSearch = 'DELETE FROM schedule WHERE schedule.schedule_id = ?'
@@ -226,11 +231,15 @@ router.get('/delete-schedule/:id',(req,res)=>{
       }
     })
   })
+}else{
+  res.redirect('../no-access')
+}
 })
 
 router.get('/delete-station/:id',(req,res)=>{
   let stationId = req.params.id
   //console.log(stationId)
+  if(req.session.admin){
   db.getConnection(async(err,connection)=>{
     if (err) throw(err)
     const sqlSearch = 'DELETE FROM station WHERE station.station_code = ?'
@@ -243,12 +252,15 @@ router.get('/delete-station/:id',(req,res)=>{
         res.redirect('/')
       }
     })
-  })
+  })}else{
+    res.redirect('../no-access')
+  }
 })
 
 router.get('/delete-train/:id',(req,res)=>{
   let trainId = req.params.id
   //console.log(stationId)
+  if(req.session.admin){
   db.getConnection(async(err,connection)=>{
     if (err) throw(err)
     const sqlSearch = 'DELETE FROM train WHERE train.train_no = ?'
@@ -261,12 +273,15 @@ router.get('/delete-train/:id',(req,res)=>{
         res.redirect('/')
       }
     })
-  })
+  })}else{
+    res.redirect('../no-access')
+  }
 })
 
 router.get('/edit-train/:id',(req,res)=>{
   let trainId = req.params.id
   //console.log(stationId)
+  if(req.session.admin){
   db.getConnection(async(err,connection)=>{
     if (err) throw(err)
     const sqlSearch = 'SELECT * FROM train WHERE train.train_no = ?'
@@ -281,11 +296,14 @@ router.get('/edit-train/:id',(req,res)=>{
         res.render('admin/edit-train',{train:trainData[0]})
       }
     })
-  })
+  })}else{
+    res.redirect('../no-access')
+  }
 })
 router.get('/edit-schedule/:id',(req,res)=>{
   let scheduleId = req.params.id
   //console.log(stationId)
+  if(req.session.admin){
   db.getConnection(async(err,connection)=>{
     if (err) throw(err)
     const sqlSearch = 'SELECT * FROM schedule WHERE schedule.schedule_id = ?'
@@ -300,11 +318,14 @@ router.get('/edit-schedule/:id',(req,res)=>{
         res.render('admin/edit-schedule',{schedule:scheduleData[0]})
       }
     })
-  })
+  })}else{
+    res.redirect('../no-access')
+  }
 })
 router.get('/edit-station/:id',(req,res)=>{
   let stationId = req.params.id
   //console.log(stationId)
+  if(req.session.admin){
   db.getConnection(async(err,connection)=>{
     if (err) throw(err)
     const sqlSearch = 'SELECT * FROM station WHERE station.station_code = ?'
@@ -319,7 +340,9 @@ router.get('/edit-station/:id',(req,res)=>{
         res.render('admin/edit-station',{station:stationData[0]})
       }
     })
-  })
+  })}else{
+    res.redirect('../no-access')
+  }
 })
 
 router.post('/edit-station/:id',(req,res)=>{
@@ -448,13 +471,19 @@ router.post('/edit-schedule/:id',(req,res)=>{
 })
 
 router.get('/add-train',(req,res)=>{
+  if(req.session.admin){
   res.render('admin/add-train');
+  }else{res.redirect('../no-access')}
 })
 router.get('/add-schedule',(req,res)=>{
-  res.render('admin/add-schedule');
+  if(req.session.admin){
+    res.render('admin/add-schedule');
+    }else{res.redirect('../no-access')}
 })
 router.get('/add-station',(req,res)=>{
-  res.render('admin/add-station');
+  if(req.session.admin){
+    res.render('admin/add-station');
+    }else{res.redirect('../no-access')}
 })
 
 router.post('/add-train',(req,res)=>{
