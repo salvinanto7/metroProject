@@ -138,7 +138,7 @@ router.post("/search", async (req, res) => {
                 JSON.parse(JSON.stringify(station[0]))
               );
 
-              //connection.release();
+              connection.release();
               schedule_list.push({
                 ...element,
                 sourcename: sourcename[0],
